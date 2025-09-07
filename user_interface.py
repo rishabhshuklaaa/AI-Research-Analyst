@@ -35,7 +35,7 @@ def display_swot(result):
         st.error("💣 Threats")
         for item in result.get("threats", []): st.markdown(f"- {item}")
     
-    # --- FIX: Source display logic is now correctly placed inside the function ---
+ 
     if "sources" in result and result["sources"]:
         with st.expander("View Sources"):
             for source in result["sources"]:
@@ -57,7 +57,7 @@ def display_promise_tracker(result):
         st.warning("➖ Dropped Points")
         for item in result.get("dropped_points", []): st.markdown(f"- {item}")
     
-    # Also add source display here if your backend provides it
+    
     if "sources" in result and result["sources"]:
         with st.expander("View Sources"):
             for source in result["sources"]:
@@ -161,7 +161,7 @@ qna_tab, swot_tab, promise_tab, context_tab, chart_tab, memo_tab = st.tabs([
 # Q&A Chat Tab
 with qna_tab:
     st.subheader("Conversational Q&A")
-    # Display chat messages from history
+    
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
@@ -171,7 +171,7 @@ with qna_tab:
                     for source in message["sources"]:
                         st.caption(source)
 
-    # --- FIX: The chat input logic is now correctly placed INSIDE the tab ---
+    
     if prompt := st.chat_input("Ask a question about the documents..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -194,7 +194,7 @@ with qna_tab:
             "content": answer, 
             "sources": sources
         })
-        st.rerun() # Rerun to update the chat display immediately
+        st.rerun() 
 
 # SWOT Analysis Tab
 with swot_tab:
@@ -208,7 +208,7 @@ with swot_tab:
         else:
             st.warning("Please enter a topic.")
 
-# --- FIX: Removed the misplaced source display code from here ---
+
 
 # Promise Tracker Tab
 with promise_tab:
