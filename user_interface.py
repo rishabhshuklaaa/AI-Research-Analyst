@@ -5,7 +5,7 @@ import pandas as pd
 import os
 
 # --- Configuration ---
-FLASK_API_URL = "http://127.0.0.1:5000"
+FLASK_API_URL = os.getenv("FLASK_API_URL", "http://127.0.0.1:5000")
 
 # --- API Calling Functions ---
 def call_api(endpoint, data):
@@ -34,8 +34,7 @@ def display_swot(result):
         for item in result.get("opportunities", []): st.markdown(f"- {item}")
         st.error("💣 Threats")
         for item in result.get("threats", []): st.markdown(f"- {item}")
-    
-    # --- FIX: Source display logic is now correctly placed inside the function ---
+
     if "sources" in result and result["sources"]:
         with st.expander("View Sources"):
             for source in result["sources"]:
@@ -57,7 +56,7 @@ def display_promise_tracker(result):
         st.warning("➖ Dropped Points")
         for item in result.get("dropped_points", []): st.markdown(f"- {item}")
     
-    # Also add source display here if your backend provides it
+    
     if "sources" in result and result["sources"]:
         with st.expander("View Sources"):
             for source in result["sources"]:
@@ -171,7 +170,7 @@ with qna_tab:
                     for source in message["sources"]:
                         st.caption(source)
 
-    # --- FIX: The chat input logic is now correctly placed INSIDE the tab ---
+    
     if prompt := st.chat_input("Ask a question about the documents..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -194,7 +193,7 @@ with qna_tab:
             "content": answer, 
             "sources": sources
         })
-        st.rerun() # Rerun to update the chat display immediately
+        st.rerun() 
 
 # SWOT Analysis Tab
 with swot_tab:
@@ -208,7 +207,7 @@ with swot_tab:
         else:
             st.warning("Please enter a topic.")
 
-# --- FIX: Removed the misplaced source display code from here ---
+
 
 # Promise Tracker Tab
 with promise_tab:
