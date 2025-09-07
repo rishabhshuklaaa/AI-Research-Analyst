@@ -14,7 +14,7 @@ from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_community.document_loaders import PyMuPDFLoader
 from dotenv import load_dotenv
-from newspaper import Article
+from newspaper import Article ,Config
 from newsapi import NewsApiClient
 from typing import List, Dict
 
@@ -80,13 +80,22 @@ class ResearchAnalystModel:
             print(f"\n📥 Ingesting {len(new_urls)} new URL(s)...")
             for url in new_urls:
                 try:
-                    article = Article(url)
+                    # Configure a user-agent to mimic a real browser 🌐
+                    config = Config()
+                    config.browser_user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36'
+            
+                    # Pass the config to the Article object
+                    article = Article(url, config=config)
                     article.download()
                     article.parse()
+            
                     if article.text:
                         doc = Document(page_content=article.text, metadata={"source": url})
                         documents.append(doc)
-                except Exception: pass
+                except Exception as e:
+                
+                    print(f"--> Failed to process URL {url}: {e}")
+                    pass
         
         # PDF Ingestion
         if new_pdfs:
