@@ -1,0 +1,24 @@
+# UI and API
+streamlit
+requests
+pandas
+Flask
+Flask-Cors
+gunicorn
+
+# LangChain and AI Core
+langchain
+langchain-core
+langchain-google-genai
+langchain-chroma  
+chromadb          
+
+# Data Loaders and Parsers
+PyMuPDF
+newspaper3k
+lxml[html_clean]  
+newsapi-python
+
+# Utilities
+python-dotenv     
+matplotlib        
