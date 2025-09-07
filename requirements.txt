@@ -9,6 +9,7 @@ gunicorn
 # LangChain and AI Core
 langchain
 langchain-core
+langchain-community
 langchain-google-genai
 langchain-chroma  
 chromadb          
